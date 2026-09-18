@@ -1,0 +1,517 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom Atlas | Flower Encyclopedia</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fffafc;
+      color: #292329;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #8e44ad, #e84393);
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    /* SEARCH */
+    .search-container {
+      max-width: 700px;
+      margin: -25px auto 30px;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    #search {
+      width: 100%;
+      padding: 18px 22px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+      outline: none;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 20px 30px;
+    }
+
+    .filter-btn {
+      border: none;
+      padding: 10px 18px;
+      border-radius: 30px;
+      background: #f0d9ed;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #d63384;
+      color: white;
+    }
+
+    /* FLOWER GRID */
+    .flower-grid {
+      max-width: 1300px;
+      margin: auto;
+      padding: 10px 25px 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    /* CARD */
+    .flower-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .flower-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .flower-image {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .flower-info {
+      padding: 20px;
+    }
+
+    .flower-info h2 {
+      margin-bottom: 5px;
+      color: #8e44ad;
+    }
+
+    .scientific {
+      font-style: italic;
+      color: #777;
+      margin-bottom: 12px;
+    }
+
+    .flower-info p {
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      background: #f8e7f4;
+      color: #8e44ad;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #292329;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    footer p {
+      margin: 5px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      .flower-grid {
+        padding: 10px 15px 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🌸 Bloom Atlas</h1>
+    <p>Explore the world's flowers, from common garden blooms to exotic species.</p>
+  </header>
+
+  <div class="search-container">
+    <input
+      type="text"
+      id="search"
+      placeholder="Search for a flower..."
+      onkeyup="searchFlowers()"
+    >
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterFlowers('all', this)">
+      All
+    </button>
+
+    <button class="filter-btn" onclick="filterFlowers('garden', this)">
+      Garden
+    </button>
+
+    <button class="filter-btn" onclick="filterFlowers('wild', this)">
+      Wild
+    </button>
+
+    <button class="filter-btn" onclick="filterFlowers('tropical', this)">
+      Tropical
+    </button>
+
+    <button class="filter-btn" onclick="filterFlowers('bulb', this)">
+      Bulbs
+    </button>
+  </div>
+
+  <main class="flower-grid" id="flowerGrid">
+
+    <!-- ROSE -->
+    <div class="flower-card" data-category="garden" data-name="rose">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=800&q=80"
+        alt="Rose"
+      >
+
+      <div class="flower-info">
+        <h2>Rose</h2>
+        <div class="scientific">Rosa</div>
+        <p>One of the world's most famous flowers, known for its beautiful blooms and fragrance.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+    <!-- SUNFLOWER -->
+    <div class="flower-card" data-category="garden" data-name="sunflower">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1597848212624-e19c8a3c4a9b?auto=format&fit=crop&w=800&q=80"
+        alt="Sunflower"
+      >
+
+      <div class="flower-info">
+        <h2>Sunflower</h2>
+        <div class="scientific">Helianthus annuus</div>
+        <p>A bright yellow flower that is famous for following the direction of sunlight when young.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+    <!-- TULIP -->
+    <div class="flower-card" data-category="bulb" data-name="tulip">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=800&q=80"
+        alt="Tulip"
+      >
+
+      <div class="flower-info">
+        <h2>Tulip</h2>
+        <div class="scientific">Tulipa</div>
+        <p>A colorful spring flower that comes in a huge variety of colors and shapes.</p>
+        <span class="tag">Bulb</span>
+      </div>
+    </div>
+
+    <!-- DAISY -->
+    <div class="flower-card" data-category="wild" data-name="daisy">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1606041008023-472dfb5e530f?auto=format&fit=crop&w=800&q=80"
+        alt="Daisy"
+      >
+
+      <div class="flower-info">
+        <h2>Daisy</h2>
+        <div class="scientific">Bellis perennis</div>
+        <p>A simple white flower with a yellow center commonly found in grasslands and gardens.</p>
+        <span class="tag">Wild</span>
+      </div>
+    </div>
+
+    <!-- ORCHID -->
+    <div class="flower-card" data-category="tropical" data-name="orchid">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1566907225474-6b5b8f6f1a0e?auto=format&fit=crop&w=800&q=80"
+        alt="Orchid"
+      >
+
+      <div class="flower-info">
+        <h2>Orchid</h2>
+        <div class="scientific">Orchidaceae</div>
+        <p>One of the largest plant families, with thousands of species found around the world.</p>
+        <span class="tag">Tropical</span>
+      </div>
+    </div>
+
+    <!-- LILY -->
+    <div class="flower-card" data-category="bulb" data-name="lily">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80"
+        alt="Lily"
+      >
+
+      <div class="flower-info">
+        <h2>Lily</h2>
+        <div class="scientific">Lilium</div>
+        <p>Elegant flowers that grow from bulbs and are known for their large, colorful blooms.</p>
+        <span class="tag">Bulb</span>
+      </div>
+    </div>
+
+    <!-- LAVENDER -->
+    <div class="flower-card" data-category="garden" data-name="lavender">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?auto=format&fit=crop&w=800&q=80"
+        alt="Lavender"
+      >
+
+      <div class="flower-info">
+        <h2>Lavender</h2>
+        <div class="scientific">Lavandula</div>
+        <p>A fragrant purple flowering plant commonly grown in gardens and used for its aroma.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+    <!-- HIBISCUS -->
+    <div class="flower-card" data-category="tropical" data-name="hibiscus">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
+        alt="Hibiscus"
+      >
+
+      <div class="flower-info">
+        <h2>Hibiscus</h2>
+        <div class="scientific">Hibiscus</div>
+        <p>A tropical-looking flower with large, colorful petals and a prominent center.</p>
+        <span class="tag">Tropical</span>
+      </div>
+    </div>
+
+    <!-- PEONY -->
+    <div class="flower-card" data-category="garden" data-name="peony">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=800&q=80"
+        alt="Peony"
+      >
+
+      <div class="flower-info">
+        <h2>Peony</h2>
+        <div class="scientific">Paeonia</div>
+        <p>A large, layered flower that is popular in gardens and floral arrangements.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+    <!-- DAFFODIL -->
+    <div class="flower-card" data-category="bulb" data-name="daffodil">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=800&q=80"
+        alt="Daffodil"
+      >
+
+      <div class="flower-info">
+        <h2>Daffodil</h2>
+        <div class="scientific">Narcissus</div>
+        <p>A cheerful spring flower recognized by its yellow trumpet-shaped center.</p>
+        <span class="tag">Bulb</span>
+      </div>
+    </div>
+
+    <!-- MARIGOLD -->
+    <div class="flower-card" data-category="garden" data-name="marigold">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=800&q=80"
+        alt="Marigold"
+      >
+
+      <div class="flower-info">
+        <h2>Marigold</h2>
+        <div class="scientific">Tagetes</div>
+        <p>A bright orange or yellow flower commonly grown in gardens.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+    <!-- CHERRY BLOSSOM -->
+    <div class="flower-card" data-category="wild" data-name="cherry blossom">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=800&q=80"
+        alt="Cherry Blossom"
+      >
+
+      <div class="flower-info">
+        <h2>Cherry Blossom</h2>
+        <div class="scientific">Prunus</div>
+        <p>Delicate pink or white blossoms that appear on cherry trees in spring.</p>
+        <span class="tag">Wild</span>
+      </div>
+    </div>
+
+    <!-- LOTUS -->
+    <div class="flower-card" data-category="tropical" data-name="lotus">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=80"
+        alt="Lotus"
+      >
+
+      <div class="flower-info">
+        <h2>Lotus</h2>
+        <div class="scientific">Nelumbo</div>
+        <p>An aquatic flowering plant that grows in ponds and other freshwater environments.</p>
+        <span class="tag">Tropical</span>
+      </div>
+    </div>
+
+    <!-- MAGNOLIA -->
+    <div class="flower-card" data-category="wild" data-name="magnolia">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1586796676779-6a7f4c9e4b6d?auto=format&fit=crop&w=800&q=80"
+        alt="Magnolia"
+      >
+
+      <div class="flower-info">
+        <h2>Magnolia</h2>
+        <div class="scientific">Magnolia</div>
+        <p>A flowering tree known for its large, fragrant flowers.</p>
+        <span class="tag">Wild</span>
+      </div>
+    </div>
+
+    <!-- CARNATION -->
+    <div class="flower-card" data-category="garden" data-name="carnation">
+      <img
+        class="flower-image"
+        src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"
+        alt="Carnation"
+      >
+
+      <div class="flower-info">
+        <h2>Carnation</h2>
+        <div class="scientific">Dianthus caryophyllus</div>
+        <p>A popular flowering plant with ruffled petals and many possible colors.</p>
+        <span class="tag">Garden</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>🌺 Bloom Atlas</p>
+    <p>Explore. Learn. Grow.</p>
+  </footer>
+
+  <script>
+
+    function searchFlowers() {
+
+      const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+      const flowers =
+        document.querySelectorAll(".flower-card");
+
+      flowers.forEach(flower => {
+
+        const name =
+          flower.dataset.name.toLowerCase();
+
+        if (name.includes(search)) {
+          flower.style.display = "block";
+        } else {
+          flower.style.display = "none";
+        }
+
+      });
+
+    }
+
+
+    function filterFlowers(category, button) {
+
+      const flowers =
+        document.querySelectorAll(".flower-card");
+
+      const buttons =
+        document.querySelectorAll(".filter-btn");
+
+      buttons.forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      flowers.forEach(flower => {
+
+        if (
+          category === "all" ||
+          flower.dataset.category === category
+        ) {
+          flower.style.display = "block";
+        } else {
+          flower.style.display = "none";
+        }
+
+      });
+
+    }
+
+  </script>
+
+</body>
+</html>
+```
